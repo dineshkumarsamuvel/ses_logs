@@ -1,11 +1,11 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
-    }
-  }
-}
+//terraform {
+//  required_providers {
+//    aws = {
+//      source  = "hashicorp/aws"
+//      version = "~> 3.0"
+//    }
+//  }
+//}
 
 # Configure the AWS Provider
 provider "aws" {
@@ -44,7 +44,7 @@ resource "aws_lambda_function" "update_ses_log_in_dynamodb_function" {
 }
 
 resource "aws_sns_topic" "ses_log_topic" {
-  name = "ses_log_topic"
+  name = "ses_logging"
 }
 
 resource "aws_sns_topic_subscription" "sns_subscription_to_lambda" {

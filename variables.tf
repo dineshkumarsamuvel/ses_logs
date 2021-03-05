@@ -1,20 +1,20 @@
 variable "lambda_role_name" {
-  default     = "update_ses_log_in_dynamodb_role"
+  default     = "ses_log_in_dynamodb_role"
   description = "IAM role for lambda"
 }
 
 variable "lambda_role_policy" {
-  default     = "update_ses_log_in_dynamodb_policy"
+  default     = "ses_log_in_dynamodb_policy"
   description = "IAM role policy"
 }
 
 variable "lambda_function_name" {
-  default     = "update_ses_log_in_dynamodb_function"
+  default     = "ses_log_in_dynamodb_function"
   description = "lambda function name"
 }
 
 variable "lambda_file_name" {
-  default     = "update_ses_log_in_dynamodb"
+  default     = "ses_log_in_dynamodb"
   description = "lambda file name"
 }
 

@@ -14,7 +14,7 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
-resource "aws_iam_role" "update_ses_log_in_dynamodb_role" {
+resource "aws_iam_role" "dynamodb_ses_logging_role" {
   name               = var.lambda_role_name
   assume_role_policy = file("${path.module}/policy/iam_role_policy.json")
 }
@@ -26,13 +26,13 @@ data "archive_file" "lambda_zip" {
 }
 
 
-resource "aws_lambda_function" "update_ses_log_in_dynamodb_function" {
+resource "aws_lambda_function" "ses_log_in_dynamodb_function" {
   function_name    = var.lambda_function_name
   filename         = "${path.module}/lambda_function/${var.lambda_file_name}.zip"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  role             = aws_iam_role.update_ses_log_in_dynamodb_role.arn
+  role             = aws_iam_role.dynamodb_ses_logging_role.arn
   runtime          = "python3.8"
-  handler          = "update_ses_log_in_dynamodb.lambda_handler"
+  handler          = "ses_log_in_dynamodb.lambda_handler"
   timeout          = "60"
   publish          = true
 
@@ -50,7 +50,7 @@ resource "aws_sns_topic" "ses_log_topic" {
 resource "aws_sns_topic_subscription" "sns_subscription_to_lambda" {
   topic_arn = aws_sns_topic.ses_log_topic.arn
   protocol  = var.sns_protocol
-  endpoint  = aws_lambda_function.update_ses_log_in_dynamodb_function.arn
+  endpoint  = aws_lambda_function.ses_log_in_dynamodb_function.arn
 }
 
 
@@ -80,7 +80,7 @@ resource "aws_dynamodb_table" "SESNotifications_table" {
 }
 
 resource "aws_iam_role_policy" "dynamodb_putitem_policy" {
-  name        = "dynamodb_putitem_and_cloudwatch_policy"
+  name        = "dynamodb_put_item_and_cloudwatch_policy"
   role = aws_iam_role.update_ses_log_in_dynamodb_role.id
   policy = <<EOF
 {

@@ -23,6 +23,9 @@ variable "aws_region" {
   description = "sender aws region"
 }
 
+variable "profile" {
+  description = "Aws profile name"
+}
 variable "sns_protocol" {
   default     = "lambda"
   description = "protocol to listen to sns topic"

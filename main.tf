@@ -10,6 +10,8 @@
 # Configure the AWS Provider
 provider "aws" {
   region = var.aws_region
+  profile = var.profile
+  shared_credentials_file = "~/.aws/credentials"
 }
 
 data "aws_caller_identity" "current" {}

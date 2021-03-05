@@ -1,9 +1,9 @@
 output "aws_iam_role_arn" {
-  value = aws_iam_role.update_ses_log_in_dynamodb_role.arn
+  value = aws_iam_role.dynamodb_ses_logging_role.arn
 }
 
 
 output "lambda_function_arn" {
-  value = aws_lambda_function.update_ses_log_in_dynamodb_function.arn
+  value = aws_lambda_function.ses_log_in_dynamodb_function.arn
 }
 

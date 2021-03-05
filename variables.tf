@@ -85,6 +85,6 @@ variable "ses_notification_types" {
 }
 
 variable "ses_email_identity" {
-  type = list
+//  type = list
 //  email = ""
 }

@@ -120,12 +120,12 @@ resource "aws_lambda_permission" "with_sns" {
 }
 
 resource "aws_ses_email_identity" "ses_email_identity" {
-  for_each = var.ses_email_identity
+  for_each = toset(var.ses_email_identity)
   email = each.value
 }
 
 resource "aws_ses_identity_notification_topic" "configure_ses_notification_for_bounce" {
-  for_each = var.ses_email_identity
+  for_each = toset(var.ses_email_identity)
   topic_arn                = aws_sns_topic.ses_log_topic.arn
   notification_type        = "Bounce"
   identity                 = aws_ses_email_identity.ses_email_identity[each.value].arn
@@ -133,7 +133,7 @@ resource "aws_ses_identity_notification_topic" "configure_ses_notification_for_b
 }
 
 resource "aws_ses_identity_notification_topic" "configure_ses_notification_for_complaint" {
-  for_each = var.ses_email_identity
+  for_each = toset(var.ses_email_identity)
   topic_arn                = aws_sns_topic.ses_log_topic.arn
   notification_type        = "Complaint"
   identity                 = aws_ses_email_identity.ses_email_identity[each.value].arn
@@ -141,7 +141,7 @@ resource "aws_ses_identity_notification_topic" "configure_ses_notification_for_c
 }
 
 resource "aws_ses_identity_notification_topic" "configure_ses_notification_for_delivery" {
-  for_each = var.ses_email_identity
+  for_each = toset(var.ses_email_identity)
   topic_arn                = aws_sns_topic.ses_log_topic.arn
   notification_type        = "Delivery"
   identity                 = aws_ses_email_identity.ses_email_identity[each.value].arn
